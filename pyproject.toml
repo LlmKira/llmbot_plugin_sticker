@@ -1,15 +1,16 @@
 [tool.poetry]
-name = "llmbot_plugin_bilisearch"
-version = "0.1.2"
+name = "llmbot_plugin_sticker"
+version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["llmkira me@dianas.cyou"]
 license = "MIT"
 readme = "README.md"
-packages = [{ include = "llmbot_plugin_bilisearch" }]
+packages = [{ include = "llmbot_plugin_sticker" }]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-bilibili-api-python = "^16.1.0"
+emoji = "^2.8.0"
+
 
 [build-system]
 requires = ["poetry-core"]
@@ -18,4 +19,4 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.plugins."llmkira.extra.plugin"]
 # The entrypoint name is the name of the plugin.
 # 前面和后面都要唯一，注册钩子的时候会用到
-bilisearch = "llmbot_plugin_bilisearch"
+sticker = "llmbot_plugin_sticker"
