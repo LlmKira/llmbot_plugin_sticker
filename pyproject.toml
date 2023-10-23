@@ -2,7 +2,7 @@
 name = "llmbot_plugin_sticker"
 version = "0.1.0"
 description = ""
-authors = ["llmkira me@dianas.cyou"]
+authors = ["llmkira <me@dianas.cyou>"]
 license = "MIT"
 readme = "README.md"
 packages = [{ include = "llmbot_plugin_sticker" }]
