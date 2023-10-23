@@ -3,7 +3,7 @@
 # @Author  : sudoskys
 # @File    : __init__.py.py
 # @Software: PyCharm
-__plugin_name__ = "reply_emoji"
+__plugin_name__ = "reply_emoji_sticker"
 __openapi_version__ = "20231017"
 
 import os
@@ -43,10 +43,12 @@ if not _cache.exists():
 
 sticker_event = StickerEvent(sticker_dir=_cache)
 
-sticker = Function(name=__plugin_name__,
-                   description=f"Respond emotionally(emoji_sticker) to messages")
+sticker = Function(
+    name=__plugin_name__,
+    description=f"Express emotions in chat by sending emoji_sticker. {sticker_event.prompt()}"
+)
 sticker.add_property(
-    property_name="select_emoji",
+    property_name="select_emoji_type",
     property_description=f"EMOJI ONLY IN {sticker_event.prompt()}",
     property_type="string",
     required=True
@@ -54,12 +56,12 @@ sticker.add_property(
 
 
 class Sticker(BaseModel):
-    select_emoji: str = Field(default=None, description=f"EMOJI ONLY IN {sticker_event.prompt()}")
+    select_emoji_type: str = Field(default=None, description=f"EMOJI ONLY IN {sticker_event.prompt()}")
 
     class Config:
         extra = "allow"
 
-    @validator("select_emoji")
+    @validator("select_emoji_type")
     def delay_validator(cls, v):
         if not v:
             raise ValueError("没想好要发什么表情呢")
@@ -132,7 +134,7 @@ class StickerTool(BaseTool):
         try:
             _set = Sticker.parse_obj(arg)
             logger.debug("Plugin: {} run with arg: {}", __plugin_name__, arg)
-            _sticker, _sticker_path = sticker_event.get_sticker(_set.select_emoji)
+            _sticker, _sticker_path = sticker_event.get_sticker(_set.select_emoji_type)
             if not _sticker_path:
                 raise ValueError(f"找不着表情")
             _meta = task.task_meta.reply_message(
