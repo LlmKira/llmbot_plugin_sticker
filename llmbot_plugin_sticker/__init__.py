@@ -45,7 +45,7 @@ sticker_event = StickerEvent(sticker_dir=_cache)
 
 sticker = Function(
     name=__plugin_name__,
-    description=f"Express emotions in chat by sending emoji_sticker. {sticker_event.prompt()}"
+    description=f"(Active func)Express emotions in chat by sending emoji_sticker. {sticker_event.prompt()}"
 )
 sticker.add_property(
     property_name="select_emoji_type",
@@ -81,7 +81,7 @@ class StickerTool(BaseTool):
     def pre_check(self):
         return True
 
-    def func_message(self, message_text):
+    def func_message(self, message_text, **kwargs):
         """
         如果合格则返回message，否则返回None，表示不处理
         """
@@ -96,8 +96,8 @@ class StickerTool(BaseTool):
         # 加入随机因子
         if not message_text:
             return None
-        if len(message_text) < 50:
-            if random.randint(0, 100) < 50:
+        if len(message_text) < 20:
+            if random.randint(0, 100) < 30:
                 return self.function
         return None
 
