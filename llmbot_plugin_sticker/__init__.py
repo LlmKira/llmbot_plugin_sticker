@@ -3,7 +3,7 @@
 # @Author  : sudoskys
 # @File    : __init__.py.py
 # @Software: PyCharm
-__plugin_name__ = "reply_emoji_sticker"
+__plugin_name__ = "express_attitude"
 __openapi_version__ = "20231017"
 
 import os
@@ -45,10 +45,10 @@ sticker_event = StickerEvent(sticker_dir=_cache)
 
 sticker = Function(
     name=__plugin_name__,
-    description=f"(Active func)Express emotions in chat by sending emoji_sticker. {sticker_event.prompt()}"
+    description=f"(Active)Reply an emoji sticker to express support or attitude",
 )
 sticker.add_property(
-    property_name="select_emoji_type",
+    property_name="select_one_emoji",
     property_description=f"EMOJI ONLY IN {sticker_event.prompt()}",
     property_type="string",
     required=True
@@ -56,12 +56,12 @@ sticker.add_property(
 
 
 class Sticker(BaseModel):
-    select_emoji_type: str = Field(default=None, description=f"EMOJI ONLY IN {sticker_event.prompt()}")
+    select_one_emoji: str = Field(default=None, description=f"EMOJI ONLY IN {sticker_event.prompt()}")
 
     class Config:
         extra = "allow"
 
-    @validator("select_emoji_type")
+    @validator("select_one_emoji")
     def delay_validator(cls, v):
         if not v:
             raise ValueError("没想好要发什么表情呢")
@@ -134,7 +134,7 @@ class StickerTool(BaseTool):
         try:
             _set = Sticker.parse_obj(arg)
             logger.debug("Plugin: {} run with arg: {}", __plugin_name__, arg)
-            _sticker, _sticker_path = sticker_event.get_sticker(_set.select_emoji_type)
+            _sticker, _sticker_path = sticker_event.get_sticker(_set.select_one_emoji)
             if not _sticker_path:
                 raise ValueError(f"找不着表情")
             _meta = task.task_meta.reply_message(
@@ -155,7 +155,7 @@ class StickerTool(BaseTool):
                         RawMessage(
                             user_id=receiver.user_id,
                             chat_id=receiver.chat_id,
-                            text=f"🍖 Sticker: {_sticker}",
+                            text=f"Done",
                             just_file=True,
                             file=[file]
                         )
