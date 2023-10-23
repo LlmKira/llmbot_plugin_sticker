@@ -16,5 +16,5 @@ dev = ["coverage", "coveralls", "pytest"]
 
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.9"
-content-hash = "95c225ce5d64537753a5b16af0ae243c20cc889ff41e016727346f31779d2a39"
+python-versions = "^3.8"
+content-hash = "c1cc3891e478394e02a4012295647b910545792800fe11c1b78ab79623c2438f"
