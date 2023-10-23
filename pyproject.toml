@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "llmbot_plugin_sticker"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["llmkira <me@dianas.cyou>"]
 license = "MIT"
