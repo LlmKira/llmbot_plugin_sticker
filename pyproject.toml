@@ -8,7 +8,7 @@ readme = "README.md"
 packages = [{ include = "llmbot_plugin_sticker" }]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 emoji = "^2.8.0"
 
 
