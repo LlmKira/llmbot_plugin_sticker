@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "llmbot_plugin_sticker"
 version = "0.1.1"
-description = ""
+description = "Openaibot Bot Plugin: Sticker,for sending sticker in chat"
 authors = ["llmkira <me@dianas.cyou>"]
 license = "MIT"
 readme = "README.md"
