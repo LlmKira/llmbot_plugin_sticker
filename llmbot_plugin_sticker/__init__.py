@@ -9,7 +9,6 @@ __openapi_version__ = "20231017"
 import os
 import pathlib
 import random
-from typing import Optional
 
 import emoji
 from llmkira.sdk.func_calling import verify_openapi_version
@@ -55,7 +54,7 @@ sticker.add_property(
 
 
 class Sticker(BaseModel):
-    select_emoji: Optional[str] = Field(default=None, description=f"EMOJI ONLY IN {sticker_event.prompt()}")
+    select_emoji: str = Field(default=None, description=f"EMOJI ONLY IN {sticker_event.prompt()}")
 
     class Config:
         extra = "allow"
@@ -93,6 +92,8 @@ class StickerTool(BaseTool):
             if match:
                 return self.function
         # 加入随机因子
+        if not message_text:
+            return None
         if len(message_text) < 50:
             if random.randint(0, 100) < 50:
                 return self.function

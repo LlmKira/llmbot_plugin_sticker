@@ -16,7 +16,6 @@ class StickerEvent(object):
             raise Exception(f'sticker dir not exists {sticker_dir}')
         self.sticker_dir = sticker_dir
         self.sticker_tale = {}
-        self.sticker_tale2 = {}
         self.emoji_pattern = re.compile("["
                                         u"\U0001F600-\U0001F64F"  # emoticons
                                         u"\U0001F300-\U0001F5FF"  # symbols & pictographs
@@ -28,13 +27,12 @@ class StickerEvent(object):
     def get_sticker_table(self) -> None:
         sticker_list = list(self.sticker_dir.glob('*.png'))
         _emoji = {}
-        _emoji2 = {}
         for sticker in sticker_list:
+            # 校验是否名称
             if len(emoji.emojize(sticker.stem)) == 1:
+                # 存储 raw
                 _emoji[emoji.demojize(sticker.stem)] = sticker.absolute()
-                _emoji2[emoji.emojize(sticker.stem)] = sticker.absolute()
         self.sticker_tale = _emoji
-        self.sticker_tale2 = _emoji2
 
     def prompt(self):
         _emoji_list = ""
@@ -43,17 +41,16 @@ class StickerEvent(object):
         return f"[{_emoji_list}]"
 
     def get_sticker(self, emoji_text: str) -> Union[Tuple[str, pathlib.Path], Tuple[None, None]]:
-        if len(emoji_text) > 2:
-            emoji_text = f":{emoji_text.strip(':')}:"
-        emoji_text = emoji.emojize(emoji_text)
-        _emoji = self.emoji_pattern.findall(emoji_text)
+        # 首取
+        _table = self.emoji_pattern.findall(emoji_text)
+        if _table:
+            emoji_text = _table[0]
+        # 重新解码
+        emoji_text = emoji.demojize(emoji_text)
+
+        # 修复不规范码
+        emoji_text = f":{emoji_text.strip(':')}:"
+
         if emoji_text in self.sticker_tale:
             return emoji_text, self.sticker_tale[emoji_text]
-        if emoji_text in self.sticker_tale2:
-            return emoji_text, self.sticker_tale2[emoji_text]
-        for _item in _emoji:
-            if _item in self.sticker_tale:
-                return _item, self.sticker_tale[_item]
-            if _item in self.sticker_tale2:
-                return _item, self.sticker_tale2[_item]
         return None, None
