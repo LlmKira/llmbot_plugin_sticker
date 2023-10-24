@@ -45,7 +45,7 @@ sticker_event = StickerEvent(sticker_dir=_cache)
 
 sticker = Function(
     name=__plugin_name__,
-    description=f"(Active)\nReply an emoji-sticker to express assitant attitude, only in {sticker_event.prompt()}",
+    description=f"(Active)\nReply an emoji-sticker to express assitant attitude",
 )
 sticker.add_property(
     property_name="emoji",

@@ -8,6 +8,7 @@ import re
 from typing import Tuple, Union
 
 import emoji
+from loguru import logger
 
 
 class StickerEvent(object):
@@ -32,6 +33,8 @@ class StickerEvent(object):
             if len(emoji.emojize(sticker.stem)) == 1:
                 # 存储 raw
                 _emoji[emoji.demojize(sticker.stem)] = sticker.absolute()
+        if not _emoji:
+            logger.error(f"sticker dir is empty {self.sticker_dir}")
         self.sticker_tale = _emoji
 
     def prompt(self):
