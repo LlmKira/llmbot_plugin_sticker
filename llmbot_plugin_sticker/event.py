@@ -41,6 +41,8 @@ class StickerEvent(object):
         return f"[{_emoji_list}]"
 
     def get_sticker(self, emoji_text: str) -> Union[Tuple[str, pathlib.Path], Tuple[None, None]]:
+        if not emoji_text:
+            return None, None
         # 首取
         _table = self.emoji_pattern.findall(emoji_text)
         if _table:

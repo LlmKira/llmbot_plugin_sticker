@@ -48,7 +48,7 @@ sticker = Function(
     description=f"(Active)\nReply an emoji-sticker to express assitant support or attitude \n$EMOJI_LIST={sticker_event.prompt()}",
 )
 sticker.add_property(
-    property_name="select_one_emoji",
+    property_name="select_emoji",
     property_description=f"EMOJI ONLY IN $EMOJI_LIST",
     property_type="string",
     required=True
@@ -56,12 +56,12 @@ sticker.add_property(
 
 
 class Sticker(BaseModel):
-    select_one_emoji: str = Field(default=None, description=f"EMOJI ONLY IN {sticker_event.prompt()}")
+    select_emoji: str = Field(default=None, description=f"EMOJI ONLY IN {sticker_event.prompt()}")
 
     class Config:
         extra = "allow"
 
-    @validator("select_one_emoji")
+    @validator("select_emoji", pre=True, always=True)
     def delay_validator(cls, v):
         if not v:
             raise ValueError("没想好要发什么表情呢")
@@ -136,8 +136,8 @@ class StickerTool(BaseTool):
         """
         try:
             _set = Sticker.parse_obj(arg)
-            logger.debug("Plugin: {} run with arg: {}", __plugin_name__, arg)
-            _sticker, _sticker_path = sticker_event.get_sticker(_set.select_one_emoji)
+            logger.info("Plugin: {} run with arg: {}", __plugin_name__, arg)
+            _sticker, _sticker_path = sticker_event.get_sticker(_set.select_emoji)
             if not _sticker_path:
                 raise ValueError(f"找不着表情")
             _meta = task.task_meta.reply_message(
