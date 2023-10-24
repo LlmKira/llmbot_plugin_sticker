@@ -119,7 +119,7 @@ class StickerTool(BaseTool):
                         RawMessage(
                             user_id=receiver.user_id,
                             chat_id=receiver.chat_id,
-                            text=f"刚刚想发贴纸发不出来，因为系统说{reason} ..."
+                            text=f"刚刚想发贴纸发不出来，因为系统说{reason[:15]}..."
                         )
                     ]
                 )
