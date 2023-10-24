@@ -37,7 +37,7 @@ if not _cache.exists():
     # 解压到 cache
     import zipfile
 
-    print("Unzip sticker")
+    logger.info("Plugin:Unzip sticker to" + str(_cache.absolute()))
     with zipfile.ZipFile(_pack, "r") as zip_ref:
         zip_ref.extractall(_cache)
 
