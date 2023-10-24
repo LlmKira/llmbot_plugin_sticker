@@ -1,6 +1,6 @@
 <div align="center">
 <a href="https://llmkira.github.io/Docs/plugin/basic">
-    <img src="https://raw.githubusercontent.com/LlmKira/.github/main/llmbot/func_call_big.png">
+<img src="https://raw.githubusercontent.com/LlmKira/.github/main/llmbot/func_call_big.png" alt="">
 </a>
 <h2>llmbot-plugin-sticker</h2>
 </div>

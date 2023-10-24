@@ -48,7 +48,7 @@ sticker = Function(
     description=f"(Active)\nReply an emoji-sticker to express assitant attitude",
 )
 sticker.add_property(
-    property_name="select_emoji",
+    property_name="emoji",
     property_description=f"select emoji only in {sticker_event.prompt()}",
     property_type="string",
     required=True
@@ -56,7 +56,7 @@ sticker.add_property(
 
 
 class Sticker(BaseModel):
-    select_emoji: str = Field(default=None, description=f"EMOJI ONLY IN {sticker_event.prompt()}")
+    select_emoji: str = Field(default="😊", description=f"EMOJI ONLY IN {sticker_event.prompt()}")
 
     class Config:
         extra = "allow"
@@ -135,8 +135,6 @@ class StickerTool(BaseTool):
         处理message，返回message
         """
         try:
-            if not arg:
-                raise ValueError("我又不想发表情了")
             _set = Sticker.parse_obj(arg)
             logger.info("Plugin: {} run with arg: {}", __plugin_name__, arg)
             _sticker, _sticker_path = sticker_event.get_sticker(_set.select_emoji)
