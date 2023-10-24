@@ -31,9 +31,9 @@ _pack = pathlib.Path(dir_path + '/sticker.zip')
 if not _pack.exists():
     raise ValueError("sticker.zip not found")
 
-_cache = pathlib.Path.home() / ".cache" / "sticker"
+_cache = pathlib.Path.home() / ".cache" / "sticker" / __openapi_version__
 if not _cache.exists():
-    _cache.mkdir(parents=False, exist_ok=True)
+    _cache.mkdir(parents=True, exist_ok=True)
     # 解压到 cache
     import zipfile
 
