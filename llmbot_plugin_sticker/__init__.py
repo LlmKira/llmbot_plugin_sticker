@@ -105,7 +105,10 @@ class StickerTool(BaseTool):
         try:
             _meta = task.task_meta.reply_notify(
                 plugin_name=__plugin_name__,
-                callback=task.task_meta.callback,
+                callback=TaskHeader.Meta.Callback(
+                    role="function",
+                    name=__plugin_name__
+                ),
             )
             await Task(queue=platform).send_task(
                 task=TaskHeader(
