@@ -45,18 +45,18 @@ sticker_event = StickerEvent(sticker_dir=_cache)
 
 sticker = Function(
     name=__plugin_name__,
-    description=f"(Active)\nReply an emoji-sticker to express assitant attitude",
+    description=f"(Active)\nReply an emoji-sticker to express assitant attitude, only in {sticker_event.prompt()}",
 )
 sticker.add_property(
     property_name="emoji",
-    property_description=f"select emoji only in {sticker_event.prompt()}",
+    property_description=f"the emoji you want to send, only in {sticker_event.prompt()}",
     property_type="string",
     required=True
 )
 
 
 class Sticker(BaseModel):
-    select_emoji: str = Field(default="😊", description=f"EMOJI ONLY IN {sticker_event.prompt()}")
+    select_emoji: str = Field(default="😊", description=f"the emoji you want to send, only in {sticker_event.prompt()}")
 
     class Config:
         extra = "allow"
