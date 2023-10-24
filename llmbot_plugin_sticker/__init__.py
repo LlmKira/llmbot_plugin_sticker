@@ -3,7 +3,7 @@
 # @Author  : sudoskys
 # @File    : __init__.py.py
 # @Software: PyCharm
-__plugin_name__ = "express_attitude"
+__plugin_name__ = "reply_sticker"
 __openapi_version__ = "20231017"
 
 import os
@@ -45,11 +45,11 @@ sticker_event = StickerEvent(sticker_dir=_cache)
 
 sticker = Function(
     name=__plugin_name__,
-    description=f"(Active)Reply an emoji sticker to express support or attitude",
+    description=f"(Active)\nReply an emoji-sticker to express assitant support or attitude \n$EMOJI_LIST={sticker_event.prompt()}",
 )
 sticker.add_property(
     property_name="select_one_emoji",
-    property_description=f"EMOJI ONLY IN {sticker_event.prompt()}",
+    property_description=f"EMOJI ONLY IN $EMOJI_LIST",
     property_type="string",
     required=True
 )
