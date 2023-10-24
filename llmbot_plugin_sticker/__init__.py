@@ -45,11 +45,11 @@ sticker_event = StickerEvent(sticker_dir=_cache)
 
 sticker = Function(
     name=__plugin_name__,
-    description=f"(Active)\nReply an emoji-sticker to express assitant support or attitude \n$EMOJI_LIST={sticker_event.prompt()}",
+    description=f"(Active)\nReply an emoji-sticker to express assitant attitude",
 )
 sticker.add_property(
     property_name="select_emoji",
-    property_description=f"EMOJI ONLY IN $EMOJI_LIST",
+    property_description=f"select emoji only in {sticker_event.prompt()}",
     property_type="string",
     required=True
 )
@@ -61,7 +61,7 @@ class Sticker(BaseModel):
     class Config:
         extra = "allow"
 
-    @validator("select_emoji", pre=True, always=True)
+    @validator("select_emoji")
     def delay_validator(cls, v):
         if not v:
             raise ValueError("没想好要发什么表情呢")
@@ -119,7 +119,7 @@ class StickerTool(BaseTool):
                         RawMessage(
                             user_id=receiver.user_id,
                             chat_id=receiver.chat_id,
-                            text=f"刚刚想发贴纸发不出来，因为系统说{reason[:15]}..."
+                            text=f"刚刚想发贴纸发不出来，因为系统说{reason}..."
                         )
                     ]
                 )
@@ -135,6 +135,8 @@ class StickerTool(BaseTool):
         处理message，返回message
         """
         try:
+            if not arg:
+                raise ValueError("我又不想发表情了")
             _set = Sticker.parse_obj(arg)
             logger.info("Plugin: {} run with arg: {}", __plugin_name__, arg)
             _sticker, _sticker_path = sticker_event.get_sticker(_set.select_emoji)
